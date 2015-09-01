@@ -1,0 +1,6 @@
+.input-daterange .input-group-start{
+	border-width: 1px 0 1px 1px;	
+}
+.input-daterange .input-group-end{
+	border-width: 1px 1px 1px 0;	
+}

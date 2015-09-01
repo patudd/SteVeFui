@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\Connector" table="connector" repository-class="Steve\FrontendBundle\Entity\ConnectorRepository">
+    <indexes>
+      <index name="IDX_148C456EA3346E40" columns="chargeBoxId"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="connector_pk_UNIQUE" columns="connector_pk"/>
+      <unique-constraint name="connector_cbid_cid_UNIQUE" columns="chargeBoxId,connectorId"/>
+    </unique-constraints>
+    <id name="connectorPk" type="integer" column="connector_pk">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="connectorid" type="integer" column="connectorId" nullable="false"/>
+    <many-to-one field="chargeboxid" target-entity="Chargebox">
+      <join-columns>
+        <join-column name="chargeBoxId" referenced-column-name="chargeBoxId"/>
+      </join-columns>
+    </many-to-one>   
+  </entity>
+</doctrine-mapping>

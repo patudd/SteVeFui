@@ -1,0 +1,77 @@
+{% extends 'SteveFrontendBundle::layout.html.twig' %}
+
+{% block title %}SteVeFui - SteVe Frontend User Interface - Chargebox-Details{% endblock %}
+{% block page %}Chargebox-Details{% endblock %}
+
+{% block body %}
+
+  	<div class="page-header">
+        <h1><a href="./main">Ladekarten</a> </h1>
+      </div>
+<div class="panel panel-default">  
+  <table class="table">
+      <thead>
+        <tr>           
+			<th>Ladekarten</th>			
+          	<th>Übergeordnete Ladekarte</th>
+          	<th>Karte</th>
+        </tr>
+      </thead>
+      <tbody id="list-users">      
+     {% for item in users %} 
+        <tr class="{% if (item.inTransaction==0 and item.blocked==0) %} success {% elseif item.inTransaction==1 %}warning{% else %}  danger {% endif %}">
+       		<td>{{ item.idTag }}</td>
+      		<td>
+      		{% if item.parentidtag %}
+      			{{ item.parentidtag.idTag }}
+      		{% endif %}
+      		</td>
+      		<td>
+      			 
+      			<div class="btn-group  btn-group-sm" role="group"  aria-label="...">
+      			{% if item.inTransaction==0 %}
+      				{% if item.blocked==0 %}
+		                <button type="button" class="btn btn-warning action">Sperren</button>
+		                <button type="button" class="btn btn-danger action">Löschen</button>
+	                {% else %}
+	                	<button type="button" class="btn btn-success action">freigeben</button>
+	                {% endif %}	                	
+                {% else %}
+	                <button type="button" class="btn btn-danger action">Ladevorgang beenden</button>	
+                {% endif %}
+                </div>
+      		</td> 
+       </tr>
+       {% endfor %}
+        </tbody>
+</table>       
+</div>
+
+<nav class="navbar navbar-default">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    	<div class="nav navbar-form  navbar-left">
+    	<div class="input-group">
+	      <input type="text" class="form-control" placeholder="Ladekarte">
+	    </div><!-- /input-group -->
+	   </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Übergeordnete Ladekarte<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+          	 {% for item in users %} 
+          	<li><a href="#">{{ item.idTag }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>      
+      <div class="nav navbar-form  navbar-right">
+	    <div class="input-group">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button">hinzufügen</button>
+	      </span>
+	    </div><!-- /input-group -->
+	  </div><!-- /.col-lg-6 -->
+    </div><!-- /.navbar-collapse -->  
+</nav>    
+{% endblock %}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\ConnectorStatus" table="connector_status">
+    <indexes>
+      <index name="FK_cs_pk_idx" columns="connector_pk"/>
+    </indexes>
+    <id name="statustimestamp" type="datetime" column="statusTimestamp"/>
+    <id name="connectorPk" association-key="true"/>
+    <field name="status" type="string" column="status" length="25" nullable="true"/>
+    <field name="errorcode" type="string" column="errorCode" length="25" nullable="true"/>
+    <field name="errorinfo" type="string" column="errorInfo" length="50" nullable="true"/>
+    <field name="vendorid" type="string" column="vendorId" length="255" nullable="true"/>
+    <field name="vendorerrorcode" type="string" column="vendorErrorCode" length="50" nullable="true"/>
+    <one-to-one field="connectorPk" target-entity="Connector">
+      <join-columns>
+        <join-column name="connector_pk" referenced-column-name="connector_pk"/>
+      </join-columns>
+    </one-to-one>
+  </entity>
+</doctrine-mapping>

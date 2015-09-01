@@ -1,0 +1,12 @@
+ {% for item in transactions %} 
+        <tr>
+       		<td>{{ item.chargeboxid }}</td>
+       		<td>{{ item.connectorid }}</td>
+       		<td>{{ item.idtag }}</td>
+      		<td>{{ item.starttimestamp is empty ? "" : item.starttimestamp|date('d.m.Y H:i:s') }}</td>
+      		<td>{{ item.stoptimestamp is empty ? "" : item.stoptimestamp|date('d.m.Y H:i:s') }}</td>
+      		<td>{{ item.durationtimestamp is empty ? "" : item.durationtimestamp|date('H:i:s') }}</td>
+      		<td></td> 
+       </tr>
+       {% endfor %}
+        </tbody>

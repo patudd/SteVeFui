@@ -1,0 +1,41 @@
+{% extends 'SteveFrontendBundle::layout.html.twig' %}
+
+{% block title %}SteVeFui - SteVe Frontend User Interface - Start{% endblock %}
+
+{% block body %}
+   	<div class="page-header">
+        <h1>{% trans %}charging stations{% endtrans %}</h1>
+      </div>
+      <div class="panel panel-default">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Ladestation</th>
+                <th>OCPPVersion</th>
+                <th>Letzte Rückmeldung</th>
+                <th>Seriennummer</th>
+                <th>Ladestation</th>
+              </tr>
+            </thead>
+            <tbody>
+             {% for item in chargeboxes %}
+              <tr class="{% if item.onlinestatus==1 %} success {% elseif item.onlinestatus==2 %}warning{% else %} danger {% endif %}">
+                <td><a href="./chargebox?chargeBoxId={{item.chargeboxid}}"> {{item.chargeboxid}} </a></td>
+                <td>{{ item.ocppversion }}</td>
+                <td>{{ item.lastheartbeattimestamp is empty ? "" : item.lastheartbeattimestamp|date('d.m.Y H:i:s', "Europe/Berlin") }}</td>
+                <td>{{ item.chargeboxserialnumber }}</td>
+                <td>
+                 {% if item.ocppversion %}
+                 <div class="btn-group  btn-group-sm" role="group"  aria-label="...">
+                <button type="button" class="btn btn-warning action"  id="{{item.chargeboxid}}" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppversion }}" data-endpointaddress="{{ item.endpointaddress }}" data-resettype="SOFT"  title="softreset">Einstellung zurücksetzen</button>
+                <button type="button" class="btn btn-danger action" id="{{item.chargeboxid}}" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppversion }}" data-endpointaddress="{{ item.endpointaddress }}"  data-resettype="HARD"  title="hardreset">Neustart</button>
+                <button type="button" class="btn btn-success action"  id="{{item.chargeboxid}}" data-action="update" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppversion }}" data-endpointaddress="{{ item.endpointaddress }}" >aktualisieren</button>
+                </div>
+                 {% endif %}
+                </td>     
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+{% endblock %}

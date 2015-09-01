@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\Transaction" table="transaction" repository-class="Steve\FrontendBundle\Entity\TransactionRepository" >
+    <indexes>
+      <index name="idTag_idx" columns="idTag"/>
+      <index name="connector_pk_idx" columns="connector_pk"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="transaction_pk_UNIQUE" columns="transaction_pk"/>
+    </unique-constraints>
+    <id name="transactionPk" type="integer" column="transaction_pk">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="starttimestamp" type="datetime" column="startTimestamp" nullable="true"/>
+    <field name="startvalue" type="string" column="startValue" length="45" nullable="true"/>
+    <field name="stoptimestamp" type="datetime" column="stopTimestamp" nullable="true"/>
+    <field name="stopvalue" type="string" column="stopValue" length="45" nullable="true"/>
+    <many-to-one field="idtag" target-entity="User">
+      <join-columns>
+        <join-column name="idTag" referenced-column-name="idTag"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="connectorPk" target-entity="Connector">
+      <join-columns>
+        <join-column name="connector_pk" referenced-column-name="connector_pk"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

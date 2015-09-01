@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\User" table="user">
+    <indexes>
+      <index name="FK_user_parentIdTag" columns="parentIdTag"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="idTag_UNIQUE" columns="idTag"/>
+    </unique-constraints>
+    <id name="idtag" type="string" column="idTag" length="15">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="expirydate" type="datetime" column="expiryDate" nullable="true"/>
+    <field name="intransaction" type="boolean" column="inTransaction" nullable="false"/>
+    <field name="blocked" type="boolean" column="blocked" nullable="false"/>
+    <many-to-one field="parentidtag" target-entity="User">
+      <join-columns>
+        <join-column name="parentIdTag" referenced-column-name="idTag"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

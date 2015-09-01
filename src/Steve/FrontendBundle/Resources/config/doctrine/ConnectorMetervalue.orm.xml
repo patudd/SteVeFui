@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\ConnectorMetervalue" table="connector_metervalue">
+    <indexes>
+      <index name="FK_cm_pk_idx" columns="connector_pk"/>
+      <index name="FK_tid_cm_idx" columns="transaction_pk"/>
+    </indexes>
+    <field name="valuetimestamp" type="datetime" column="valueTimestamp" nullable="true"/>
+    <field name="value" type="string" column="value" length="45" nullable="true"/>
+    <field name="readingcontext" type="string" column="readingContext" length="20" nullable="true"/>
+    <field name="format" type="string" column="format" length="20" nullable="true"/>
+    <field name="measurand" type="string" column="measurand" length="40" nullable="true"/>
+    <field name="location" type="string" column="location" length="10" nullable="true"/>
+    <field name="unit" type="string" column="unit" length="10" nullable="true"/>
+    <many-to-one field="transactionPk" target-entity="Transaction">
+      <join-columns>
+        <join-column name="transaction_pk" referenced-column-name="transaction_pk"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="connectorPk" target-entity="Connector">
+      <join-columns>
+        <join-column name="connector_pk" referenced-column-name="connector_pk"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

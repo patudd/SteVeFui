@@ -1,0 +1,26 @@
+charging stations: Ladestationen
+Available: verfügbar
+Occupied: besetzt
+Faulted: Fehler
+Unavailable: nicht verfügbar
+ConnectorLockFailure: Anschluss Fehler
+High Temperature: Zu hohe Temperatur
+NoError: Keine Fehler
+PowerMeterFairlure: Power Meter Failure
+PowerSwitchFaire: Netzschalter Fehler
+ReaderFairlure: Lese Fehler
+ReaderFairlure:
+ResetFairlure:
+Failure to lock or unlock connector.: Fehler beim Sperren oder Entsperren des Anschlusses.
+Ground fault circuit interrupter has been activated.: FI-Schutzschalter wurde ausgelöst.
+Temperature inside charge point is too high.: Die Temperatur im Ladestation ist zu hoch.
+Problem with Mode 3 connection to vehicle.: Problem mit der Modus 3 Verbindung zum Fahrzeug.
+No error to report.: Kein Fehler zu berichten.
+Other type of error. More information in vendorErrorCode.: Eine andere Art eines Fehler. Mehr Informationen im Hersteller spezifischen Fehlercode (vendorErrorCode).
+Over current protection device has tripped.: Überstromschutzeinrichtung hat ausgelöst.
+Failure to read power meter.: Fehler beim Lesen der Leistungsdaten.
+Failure to control power switch.: Fehler beim Kontroll Schalter steuern.
+Failure with ID tag reader.: Fehler mit dem mit RFID-Tag-Leser.
+Unable to perform a reset.: Es kann kein Reset durchzuführen.
+Voltage has dropped below an acceptable level.: Spannung ist unter ein akzeptables Niveau gefallen.
+Wireless communication device reports a weak signal.: Das drahtlose Kommunikationsgerät meldet ein schwaches Signal.

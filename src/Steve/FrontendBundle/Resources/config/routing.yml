@@ -1,0 +1,12 @@
+steve_frontend_homepage:
+    pattern:     /{page}
+    defaults: { _controller: SteveFrontendBundle:Default:index }
+steve_frontend_homepage_main:
+    pattern:     /
+    defaults: { _controller: SteveFrontendBundle:Default:index }
+SteveFrontendBundle_ajax_update_mydata:
+  pattern:  /update/data/from/ajax/call
+  defaults: { _controller: SteveFrontendBundle:Default:updateData }
+SteveFrontendBundle_ajax_load_mydata:
+  pattern:  /load/data/from/ajax/call
+  defaults: { _controller: SteveFrontendBundle:Default:loadAjaxData }

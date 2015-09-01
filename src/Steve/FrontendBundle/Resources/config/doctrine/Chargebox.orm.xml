@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\Chargebox" table="chargebox">
+    <unique-constraints>
+      <unique-constraint name="chargeBoxId_UNIQUE" columns="chargeBoxId"/>
+    </unique-constraints>
+    <id name="chargeboxid" type="string" column="chargeBoxId" length="30">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="endpointAddress" type="string" column="endpoint_address" length="45" nullable="true"/>
+    <field name="ocppversion" type="string" column="ocppVersion" length="3" nullable="true"/>
+    <field name="chargepointvendor" type="string" column="chargePointVendor" length="20" nullable="true"/>
+    <field name="chargepointmodel" type="string" column="chargePointModel" length="20" nullable="true"/>
+    <field name="chargepointserialnumber" type="string" column="chargePointSerialNumber" length="25" nullable="true"/>
+    <field name="chargeboxserialnumber" type="string" column="chargeBoxSerialNumber" length="25" nullable="true"/>
+    <field name="fwversion" type="string" column="fwVersion" length="20" nullable="true"/>
+    <field name="fwupdatestatus" type="string" column="fwUpdateStatus" length="25" nullable="true"/>
+    <field name="fwupdatetimestamp" type="datetime" column="fwUpdateTimestamp" nullable="true"/>
+    <field name="iccid" type="string" column="iccid" length="20" nullable="true"/>
+    <field name="imsi" type="string" column="imsi" length="20" nullable="true"/>
+    <field name="metertype" type="string" column="meterType" length="25" nullable="true"/>
+    <field name="meterserialnumber" type="string" column="meterSerialNumber" length="25" nullable="true"/>
+    <field name="diagnosticsstatus" type="string" column="diagnosticsStatus" length="20" nullable="true"/>
+    <field name="diagnosticstimestamp" type="datetime" column="diagnosticsTimestamp" nullable="true"/>
+    <field name="lastheartbeattimestamp" type="datetime" column="lastHeartbeatTimestamp" nullable="true"/>
+  </entity>
+</doctrine-mapping>
