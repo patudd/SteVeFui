@@ -1,7 +1,7 @@
 {% extends 'SteveFrontendBundle::layout.html.twig' %}
 
-{% block title %}SteVeFui - SteVe Frontend User Interface - Chargebox-Details{% endblock %}
-{% block page %}Chargebox-Details{% endblock %}
+{% block title %}SteVeFui - SteVe Frontend User Interface - Ladekarten{% endblock %}
+{% block page %}Ladekarten{% endblock %}
 
 {% block body %}
 
@@ -17,33 +17,9 @@
           	<th>Karte</th>
         </tr>
       </thead>
-      <tbody id="list-users">      
-     {% for item in users %} 
-        <tr class="{% if (item.inTransaction==0 and item.blocked==0) %} success {% elseif item.inTransaction==1 %}warning{% else %}  danger {% endif %}">
-       		<td>{{ item.idTag }}</td>
-      		<td>
-      		{% if item.parentidtag %}
-      			{{ item.parentidtag.idTag }}
-      		{% endif %}
-      		</td>
-      		<td>
-      			 
-      			<div class="btn-group  btn-group-sm" role="group"  aria-label="...">
-      			{% if item.inTransaction==0 %}
-      				{% if item.blocked==0 %}
-		                <button type="button" class="btn btn-warning action">Sperren</button>
-		                <button type="button" class="btn btn-danger action">Löschen</button>
-	                {% else %}
-	                	<button type="button" class="btn btn-success action">freigeben</button>
-	                {% endif %}	                	
-                {% else %}
-	                <button type="button" class="btn btn-danger action">Ladevorgang beenden</button>	
-                {% endif %}
-                </div>
-      		</td> 
-       </tr>
-       {% endfor %}
-        </tbody>
+      <tbody id="list-users">  
+     	{% include ('SteveFrontendBundle:Ajax:listuser.html.twig') %}
+       </tbody>
 </table>       
 </div>
 
@@ -52,15 +28,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     	<div class="nav navbar-form  navbar-left">
     	<div class="input-group">
-	      <input type="text" class="form-control" placeholder="Ladekarte">
+	      <input type="text" class="form-control" placeholder="Ladekarte" id="add-user" />
+	      <input type="text" id="top-user" style="display: none;" />
 	    </div><!-- /input-group -->
 	   </div>
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Übergeordnete Ladekarte<span class="caret"></span></a>
+          <a href="#" id="top-list" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Übergeordnete Ladekarte<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           	 {% for item in users %} 
-          	<li><a href="#">{{ item.idTag }}</a></li>
+          	<li><a href="#" class="set-top-user" data-action="set-top-user"  data-idtag="{{ item.idTag }}">{{ item.idTag }}</a></li>
             {% endfor %}
           </ul>
         </li>
@@ -68,7 +45,7 @@
       <div class="nav navbar-form  navbar-right">
 	    <div class="input-group">
 	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button">hinzufügen</button>
+	        <button class="btn btn-default user" type="button" data-object="user" data-action="add">hinzufügen</button>
 	      </span>
 	    </div><!-- /input-group -->
 	  </div><!-- /.col-lg-6 -->

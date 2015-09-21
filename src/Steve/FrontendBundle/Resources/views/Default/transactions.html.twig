@@ -8,45 +8,42 @@
   	<div class="page-header">
         <h1><a href="./main">Ladeberichte</a> </h1>
       </div>
-
-
-
-<nav class="navbar navbar-default">
-  
+<nav class="navbar navbar-default">  
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ladestation <span class="caret"></span></a>
+          <a href="#" id="top-list-chargebox" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ladestation <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">DREWAG1</a></li>
+          	<li><a href="#" class="filter" data-filter="c.chargeboxid" data-value="*">Alle</a></li>          	
+          	{% for item in chargeboxes %} 
+            <li><a href="#" class="filter" data-filter="c.chargeboxid" data-value="{{ item.chargeboxid }}">{{ item.chargeboxid }}</a></li>
+            {% endfor %} 
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ladekarte<span class="caret"></span></a>
+          <a href="#" id="top-list-idtag" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ladekarte<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+          <li><a href="#" class="filter" data-filter="t.idtag" data-value="*">Alle</a></li>
            {% for item in users %} 
           	<li><a href="#" class="filter" data-filter="t.idtag" data-value="{{ item.idTag }}">{{ item.idTag }}</a></li>
             {% endfor %}           
           </ul>
         </li>
-      </ul>  
-      
-       <div class='nav navbar-nav navbar-form form-group input-daterange'>
-            
-                <div class='input-group date'>
-                	<span class="input-group-addon input-group-start" id="sizing-addon1">von</span>
-                    <input type='text' class="form-control"  name="start"  style="width: 150px;"/>
-                    <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    <span class="input-group-addon">bis</span>
-                    <input type='text' class="form-control"  name="end"  style="width: 150px;"/>
-                    <span class="input-group-addon input-group-end">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-          
+      </ul>       
+       <div class="nav navbar-nav navbar-form form-group input-daterange">            
+              <div class="input-group date">
+              	<span class="input-group-addon input-group-start" id="sizing-addon1">von</span>
+                  <input type='text' class="form-control data-fiter" name="start"  style="width: 150px;"  data-filter="t.starttimestamp" />
+                  <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                  <span class="input-group-addon">bis</span>
+                  <input type='text' class="form-control data-fiter" name="end"  style="width: 150px;" data-filter="t.stoptimestamp" />
+                  <span class="input-group-addon input-group-end">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>          
         </div>
       <div class="nav navbar-form  navbar-right">
 	    <div class="input-group">
@@ -66,16 +63,18 @@
   <table class="table">
       <thead>
         <tr>           
-			<th>Ladestation</th>
-			<th>Ladepunkt</th>
-			<th>Ladekarte</th>
-			<th>Ladevorgang gestartet</th>
-          	<th>Letzter Ladevorgang beendet</th>
+			<th>Station</th>
+			<th>Dose</th>
+			<th>Karte</th>
+			<th>Vorgang gestartet</th>
+          	<th>Vorgang beendet</th>
+          	<th>Verbrauch</th>
           	<th>Ladedauer</th>
         </tr>
       </thead>
-      <tbody  id="list-transactions">
-    	{% include ('SteveFrontendBundle:Default:listtransactions.html.twig') %}
+      <tbody id="list-transactions">
+    	{% include ('SteveFrontendBundle:Ajax:listtransactions.html.twig') %}
+      </tbody>
 </table>       
 </div>    
 {% endblock %}

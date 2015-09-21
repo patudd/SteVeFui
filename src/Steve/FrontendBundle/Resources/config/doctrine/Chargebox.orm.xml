@@ -8,7 +8,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="endpointAddress" type="string" column="endpoint_address" length="45" nullable="true"/>
-    <field name="ocppversion" type="string" column="ocppVersion" length="3" nullable="true"/>
+    <field name="ocppprotocol" type="string" column="ocppProtocol" length="3" nullable="true"/>
     <field name="chargepointvendor" type="string" column="chargePointVendor" length="20" nullable="true"/>
     <field name="chargepointmodel" type="string" column="chargePointModel" length="20" nullable="true"/>
     <field name="chargepointserialnumber" type="string" column="chargePointSerialNumber" length="25" nullable="true"/>

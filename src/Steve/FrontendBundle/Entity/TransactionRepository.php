@@ -19,11 +19,26 @@ class TransactionRepository extends EntityRepository
 		if (!empty($filter))
 		{
 			$where = "";
-			foreach ($filter as $key => $value)
-				$where.=" ".$key ." = '" . $value ."'";
+			foreach ($filter as $key => $value){
+				if (!empty($value))
+				{
+					switch ($key){
+					case "t.starttimestamp":
+						$where.=" ".$key ." > '" . $value ."' and ";
+						break;
+					case "t.stoptimestamp":
+						$where.=" ".$key ." < '" . $value ."' and ";
+						break;					
+					default:	
+						$where.=" ".$key ." = '" . $value ."' and ";
+					
+					}
+				}
+			}			
+			$where.="1=1";
 		}
 		
-		$fields = array('c.connectorid as connectorid', 'IDENTITY(c.chargeboxid) as chargeboxid', 't.transactionPk', 't.starttimestamp', 't.stoptimestamp', 'IDENTITY(t.idtag) as idtag');
+		$fields = array('c.connectorid as connectorid', 'IDENTITY(c.chargeboxid) as chargeboxid', 't.transactionPk', 't.starttimestamp', 't.stoptimestamp', 't.startvalue', 't.stopvalue', 'IDENTITY(t.idtag) as idtag');
 		$query = $this->getEntityManager()->createQueryBuilder()
 		->select($fields)
 		->from('SteveFrontendBundle:Transaction', 't')
@@ -55,10 +70,14 @@ class TransactionRepository extends EntityRepository
 					
 				}
 			}
+			if ($transaction["stopvalue"] > $transaction["startvalue"])
+				$transaction["durationvalue"] = $transaction["stopvalue"] - $transaction["startvalue"];
+			else
+				$transaction["durationvalue"] = 0;
+			
 			$transactions_new[] = $transaction;
 			
 		}
 		return $transactions_new;
 	}
-
 }

@@ -25,46 +25,8 @@
           	<th>Ladevorgang</th>
         </tr>
       </thead>
-      <tbody>
-       {% for item in connectors %}      
-       <!--  active {% if item.transactionstatus %}warning{% else %}success{% endif %} {% if item.connectorstatus!='true' %}danger{% endif %} -->
-        <tr class="{% if item.connectorstatus==1 %} success {% elseif item.connectorstatus==2 %}warning{% else %} danger {% endif %}">
-          <td>{{ item.connectorid }}</td>
-          <td>{{ item.idtag }}</td>
-          <td>
-          
-          <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ item.statustitel }}&lt;br&gt; {{ item.statusmessage }}">{{ item.status }}</a>
-          {% if item.connectorstatus==3 %}
-          <span class="glyphicon glyphicon glyphicon glyphicon-question-sign" data-placement="right" data-toggle="tooltip" aria-hidden="true" title="{{ item.statustitel }} &lt;br&gt; {{ item.statusmessage }}"></span>
-          {% endif %}
-          </td>
-          <td>{{ item.starttimestamp is empty ? "" : item.starttimestamp|date('d.m.Y H:i:s', "Europe/Berlin") }}</td>
-          <td>{{ item.stoptimestamp is empty ? "" : item.stoptimestamp|date('d.m.Y H:i:s', "Europe/Berlin") }}</td>
-          <td>
-          <div class="btn-group">
-          {% if item.connectorstatus==1 %} 
-	         <button type="button" class="btn btn-warning action" title="Stecker entriegeln" data-connectorid="{{ item.connectorid }}" data-action="UnlockConnector" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppversion }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Stecker entriegeln</button>
-			
-				 <button type="button" class="btn btn-success action" title="Startet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppversion }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Starten</button>
-				  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				    <span class="caret"></span>
-				    <span class="sr-only">Toggle Dropdown</span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu">
-				  	 <li><input class="typeahead " type="text"></li>	
-				  	{% for user in users %}      
-					    <li><a href="#" class="action hc" title="Startet Ladevorgang" id="{{ user.idtag }}" data-idtag="{{ user.idtag }}" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppversion }}" data-endpointaddress="{{ chargebox.endpointaddress }}">{{ user.idtag }}</a></li>
-				   	{% endfor %} 
-				  </ul>
-				 
-	          {% elseif item.connectorstatus==2 %}
-	           <button type="button" class="btn btn-warning action" title="Startet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER"   data-transactionid="{{ item.transactionPk }}" data-connectorid="{{ item.connectorid }}" data-action="RemoteStopTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppversion }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Beenden</button>   	           
-	          {% else %}
-	          </div>
-          {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
+      <tbody id="list-chargebox">
+      		{% include ('SteveFrontendBundle:Ajax:listchargebox.html.twig') %}
         </tbody>
 </table>  
 </div>

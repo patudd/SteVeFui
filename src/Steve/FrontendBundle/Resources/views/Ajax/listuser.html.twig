@@ -1,3 +1,25 @@
-<div class="page-header">
-        <h1><a href="./main">User</a> </h1>
-      </div>
+{% for item in users %} 
+     <tr class="{% if (item.inTransaction==0 and item.blocked==0) %} success {% elseif item.inTransaction==1 %}warning{% else %}  danger {% endif %}">
+    		<td>{{ item.idTag }}</td>
+   		<td>
+   		{% if item.parentidtag %}
+   			{{ item.parentidtag.idTag }}
+   		{% endif %}
+   		</td>
+   		<td>
+   			 
+   			<div class="btn-group  btn-group-sm" role="group"  aria-label="...">
+   			{% if item.inTransaction==0 %}
+   				{% if item.blocked==0 %}
+               <button type="button" class="btn btn-warning user" data-idtag="{{ item.idTag }}" data-object="user" data-action="update" data-status="block" >Sperren</button>
+               <button type="button" class="btn btn-danger user" data-idtag="{{ item.idTag }}" data-object="user" data-action="delete">Löschen</button>
+              {% else %}
+              	<button type="button" class="btn btn-success user"  data-idtag="{{ item.idTag }}" data-object="user" data-action="update" data-status="free">freigeben</button>
+              {% endif %}	                	
+             {% else %}
+              <button type="button" class="btn btn-danger user">Ladevorgang beenden</button>	
+             {% endif %}
+             </div>
+   		</td> 
+    </tr>
+{% endfor %}

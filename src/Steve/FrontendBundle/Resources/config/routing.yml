@@ -9,4 +9,7 @@ SteveFrontendBundle_ajax_update_mydata:
   defaults: { _controller: SteveFrontendBundle:Default:updateData }
 SteveFrontendBundle_ajax_load_mydata:
   pattern:  /load/data/from/ajax/call
-  defaults: { _controller: SteveFrontendBundle:Default:loadAjaxData }
+  defaults: { _controller: SteveFrontendBundle:Ajax:loadAjaxData }
+SteveFrontendBundle_interface:
+  pattern:  /load/data/from/interface/call
+  defaults: { _controller: SteveFrontendBundle:Interface:loadInterfaceData }

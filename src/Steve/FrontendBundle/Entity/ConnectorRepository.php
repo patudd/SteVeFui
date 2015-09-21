@@ -29,12 +29,13 @@ class ConnectorRepository extends EntityRepository
 	public function findOneByconnectorPKJoinedToTransaction($connector_pk)
 	{
 		
-		$fields = array('c.connectorid as connectorid', 'IDENTITY(c.chargeboxid) as chargeboxid', 't.transactionPk', 't.starttimestamp', 't.stoptimestamp', 'IDENTITY(t.idtag) as idtag', 'cs.status', 'cs.errorcode');
+		$fields = array('c.connectorid as connectorid', 'IDENTITY(c.chargeboxid) as chargeboxid', 't.transactionPk', 't.starttimestamp', 't.stoptimestamp', 'IDENTITY(t.idtag) as idtag', 'cs.status', 'cs.errorcode', 'cb.lastheartbeattimestamp');
 		$query = $this->getEntityManager()->createQueryBuilder()
 		->select($fields)
 		->from('SteveFrontendBundle:Connector', 'c')
 		->leftJoin("SteveFrontendBundle:ConnectorStatus", "cs", "WITH", "c.connectorPk=cs.connectorPk")
 		->leftJoin("SteveFrontendBundle:Transaction", "t", "WITH", "c.connectorPk=t.connectorPk")
+		->leftJoin("SteveFrontendBundle:Chargebox", "cb", "WITH", "c.chargeboxid=cb.chargeboxid")
 		->where('c.connectorPk = '.$connector_pk.'')
 		->addOrderBy('t.transactionPk', 'desc')		
 		->addOrderBy('cs.statustimestamp', 'desc')		
@@ -53,10 +54,10 @@ class ConnectorRepository extends EntityRepository
 		//$em = $this->getEntityManager();
 		//$em = $this->getEntityManager();
 		
-	//	$connector->set
+		//	$connector->set
 		//$connector->setTransactionStatus(1);
 		/*
-	$q2 = $em->createQueryBuilder('r');
+		$q2 = $em->createQueryBuilder('r');
 		$q2->where('1=1')
 		->setParameter('key', $key);
 		*/
@@ -84,13 +85,12 @@ class ConnectorRepository extends EntityRepository
 		
 		//$connector = $connector->getArrayResult();
 		
-		
-
 		/*
 		 * simulation vor Transaction without change Connector status
 		 * */
 		$sim = 1;
 		
+		 
 		if ($sim == 1)
 		{
 			$connector['connectorstatus'] = false;
@@ -128,6 +128,15 @@ class ConnectorRepository extends EntityRepository
 			$connector['transactionstatus'] = true;
 		}else{
 			$connector['transactionstatus'] = false;
+		}
+		$station = $connector['lastheartbeattimestamp']->getTimestamp();
+		$dif = time() - $station;
+		
+		// einen Tag nicht erreichbar oder noch nie errechbar
+		if (($dif - 60*60*24)>0){
+			$connector['connectorstatus'] = 5;
+		}else if(($dif - 60*60)>0){ // zwei Stunde nicht erreichbar
+			$connector['connectorstatus'] = 4;
 		}
 		
 		return $connector;

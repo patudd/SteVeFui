@@ -11,14 +11,14 @@
     <title>{% block title %}SteVeFui - SteVe Frontend User Interface{% endblock %}</title>
 	{% block stylesheets %}
     <!-- Bootstrap core CSS -->
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/css/bootstrap.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/css/main.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/css/bootstrap-dialog.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/typeahead/suggestion.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/vendor/datepicker/datepicker.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/screen.css') }}" />
-   			<link rel="stylesheet" href="{{ asset('bundles/stevefronend/form.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/css/bootstrap.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/css/main.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/css/bootstrap-dialog.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/typeahead/suggestion.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/vendor/datepicker/datepicker.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/screen.css') }}" />
+   			<link rel="stylesheet" href="{{ asset('bundles/stevefrontend/form.css') }}" />
     {% endblock %}
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
@@ -36,31 +36,53 @@
  <script>
  
  var global_url = "{{ global.url }}"; 
- var global_username_steve = "{{ global.username_steve }}"; 
- var global_password_steve = "{{ global.password_steve }}"; 
+ var global_interface = "{{ global.interface }}"; 
+ 
+ var global_ajax_path = "{{path('SteveFrontendBundle_ajax_load_mydata')}}"; 
+ var global_interface_path = "{{path('SteveFrontendBundle_interface')}}";
+ 
  </script>
-          <script src="{{ asset('bundles/stevefronend/vendor/jquery/dist/jquery.min.js') }}"></script>
-          <script src="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/js/tooltip.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/js/modal.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/js/dropdown.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/bootstrap/dist/js/bootstrap-dialog.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/typeahead/typeahead.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/datepicker/datepicker.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/vendor/datepicker/datepicker.de.js') }}"></script>
-           <script src="{{ asset('bundles/stevefronend/js/stevefui.js') }}"></script>
+          <script src="{{ asset('bundles/stevefrontend/vendor/jquery/dist/jquery.min.js') }}"></script>
+          <script src="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/js/tooltip.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/js/modal.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/js/dropdown.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/bootstrap/dist/js/bootstrap-dialog.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/typeahead/typeahead.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/datepicker/datepicker.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/vendor/datepicker/datepicker.de.js') }}"></script>
+           <script src="{{ asset('bundles/stevefrontend/js/stevefui.js') }}"></script>
 	    <script>
 	    $(document).ready(function() {
+	    	
+	    	/* Wichtig! Da sonst nach dem Ajax laden der Funktionsaufruf nicht geht*/
+	    	$(document).on("click",".user",function(){
+	    		getUserParameter($( this ));
+	    	});
 	    	
 	        $("[data-toggle=tooltip]").tooltip();
 	        
 	        $(".filter").click(function(){
-	        	 $.post('{{path('SteveFrontendBundle_ajax_load_mydata')}}',  {filter: $( this ).data("filter"), value: $( this ).data("value")}, "json").done(function( data ) {	        	    	
+	        	if ($( this ).data("filter")=="c.chargeboxid")
+	        		$("#top-list-chargebox").text($( this ).text());
+	        	if ($( this ).data("filter")=="t.idtag")
+	        		$("#top-list-idtag").text($( this ).text());
+	        	
+	        	 $.post(global_ajax_path,  {ajax: 'transactions', filter: $( this ).data("filter"), value: $( this ).data("value")}, "json").done(function( data ) {	        	    	
 	        	    	$('#list-transactions').html(data); 
 	        	    }); 
 	        });
-	        $(".action").click(function(){
-		        
+	        $(".data-fiter").change(function(){
+	        	$.post(global_ajax_path,  {ajax: 'transactions', filter: $( this ).data("filter"), value: $( this ).val()}, "json").done(function( data ) {	        	    	
+	        	    	$('#list-transactions').html(data); 
+	        	});
+	        });
+	        $(".action").click(function(){		        
 	        	getStartParameter($( this ));
+			 });
+
+	        
+	        $(".set-top-user").click(function(){		        
+	        	setTopUserParameter($( this ));
 			 });
 	        
 	        // suggestions suche von Parametern, Plugin typeahead
@@ -94,12 +116,6 @@
       <div class="container">
 
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="./main">SteVeFui</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -107,9 +123,19 @@
             <li class="{% if global.page=="main" %}active{% endif %}"><a href="./main">Start</a></li>
             <li class="{% if global.page=="transactions" %}active{% endif %}"><a href="./transactions">Ladeberichte</a></li>
             <li class="{% if global.page=="users" %}active{% endif %}"><a href="./users">Ladekarten</a></li>
-            <li class="{% if global.page=="main" %}active{% endif %}"><a href="./main">Kontakt</a></li>
+            <li class="{% if global.page=="main" %}active{% endif %}"><a href="./contact">Kontakt</a></li>
+            <li class="{% if global.page=="main" %}active{% endif %} ">1</li>
           </ul>
-        </div><!--/.nav-collapse -->
+           <ul class="nav navbar-nav navbar-right">
+	           	<li>
+	           	<button class="btn btn-primary btn-danger" type="button" style="margin-top:10px">
+					  <span class="badge">4</span> Nachrichten
+				</button>
+				</li>
+           </ul>
+          
+        </div>
+        <!--/.nav-collapse -->
       </div>
     </nav>
      <div class="container theme-showcase" role="main">

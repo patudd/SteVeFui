@@ -1,0 +1,27 @@
+{% for item in transactions %} 
+     <tr class="{% if item.durationtimestamp is not empty  %}
+   		{% if item.durationtimestamp.timestamp  < 360  %}
+	   		warning
+		{% endif %}
+		{% if item.durationtimestamp.timestamp  < 60  %}
+	   		danger
+		{% endif %}
+	{% endif %}
+	
+   	{% if item.durationvalue   < 50  %}
+   		warning
+	{% endif %}
+	{% if item.durationvalue < 5  %}
+   		danger
+	{% endif %}
+	">
+   		<td>{{ item.chargeboxid }}</td>
+   		<td>{{ item.connectorid }}</td>
+   		<td>{{ item.idtag }}</td>
+   		<td>{{ item.starttimestamp is empty ? "" : item.starttimestamp|date('d.m.Y H:i:s') }} </td>
+   		<td>{{ item.stoptimestamp is empty ? "" : item.stoptimestamp|date('d.m.Y H:i:s') }}</td>
+   		<td>{{ item.durationvalue }}</td>
+   		<td>{{ item.durationtimestamp is empty ? "" : item.durationtimestamp|date('H:i:s')   }}</td>      		
+   		<td></td> 
+    </tr>
+{% endfor %}   

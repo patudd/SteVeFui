@@ -22,9 +22,9 @@ class Chargebox
     /**
      * @var string
      *
-     * @ORM\Column(name="ocppVersion", type="string", length=3, nullable=true)
+     * @ORM\Column(name="ocppProtocol", type="string", length=3, nullable=true)
      */
-    private $ocppversion;
+    private $ocppprotocol;
 
     /**
      * @var string
@@ -159,26 +159,26 @@ class Chargebox
     }
 
     /**
-     * Set ocppversion
+     * Set ocppprotocol
      *
-     * @param string $ocppversion
+     * @param string $ocppprotocol
      * @return Chargebox
      */
-    public function setOcppversion($ocppversion)
+    public function setOcppprotocol($ocppprotocol)
     {
-        $this->ocppversion = $ocppversion;
+        $this->ocppprotocol = $ocppprotocol;
 
         return $this;
     }
 
     /**
-     * Get ocppversion
+     * Get ocppprotocol
      *
      * @return string 
      */
-    public function getOcppversion()
+    public function getOcppprotocol()
     {
-        return $this->ocppversion;
+        return $this->ocppprotocol;
     }
 
     /**
