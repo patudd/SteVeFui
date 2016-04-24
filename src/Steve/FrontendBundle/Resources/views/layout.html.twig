@@ -126,11 +126,11 @@
             <li class="{% if global.page=="main" %}active{% endif %}"><a href="./contact">Kontakt</a></li>
             <li class="{% if global.page=="main" %}active{% endif %} ">1</li>
           </ul>
-           <ul class="nav navbar-nav navbar-right">
+           <ul class="navbar-right">
 	           	<li>
-	           	<button class="btn btn-primary btn-danger" type="button" style="margin-top:10px">
-					  <span class="badge">4</span> Nachrichten
-				</button>
+	           	<a class="btn btn-default btn-primary btn-sm btn-danger" href="./messages" role="button" style="margin-top:10px">
+					  <span class="badge">{{ global.messages }}</span> Nachrichten
+				</a>
 				</li>
            </ul>
           

@@ -80,7 +80,7 @@ class AjaxController extends DefaultController
 					$array_render = OutputController::createContentChargebox(null, $chargeBoxId);
 	
 					$template = $this->renderView('SteveFrontendBundle:Ajax:listchargebox.html.twig', $array_render);
-					break;
+					break;					
 				default:
 					break;
 			}

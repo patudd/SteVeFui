@@ -17,7 +17,7 @@
               	<button type="button" class="btn btn-success user"  data-idtag="{{ item.idTag }}" data-object="user" data-action="update" data-status="free">freigeben</button>
               {% endif %}	                	
              {% else %}
-              <button type="button" class="btn btn-danger user">Ladevorgang beenden</button>	
+              <button type="button" disabled="disabled" class="btn btn-warning action" title="Beendet Ladevorgang" id="{{ item.idTag }}" data-idtag="{{ item.idTag }}" data-action="UserTransactionReset">Zurück setzen</button>	
              {% endif %}
              </div>
    		</td> 

@@ -31,7 +31,6 @@ class Connector
      * })
      */
     private $chargeboxid;
-
     
     /**
      * Set connectorid
@@ -100,4 +99,5 @@ class Connector
     {
         return $this->connectorPk;
     }
+
 }

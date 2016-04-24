@@ -15,6 +15,11 @@
     <field name="startdatetime" type="datetime" column="startDatetime" nullable="true"/>
     <field name="expirydatetime" type="datetime" column="expiryDatetime" nullable="true"/>
     <field name="status" type="string" column="status" length="15" nullable="false"/>
+    <many-to-one field="transactionPk" target-entity="Transaction">
+      <join-columns>
+        <join-column name="transaction_pk" referenced-column-name="transaction_pk"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="idtag" target-entity="User">
       <join-columns>
         <join-column name="idTag" referenced-column-name="idTag"/>
@@ -23,11 +28,6 @@
     <many-to-one field="chargeboxid" target-entity="Chargebox">
       <join-columns>
         <join-column name="chargeBoxId" referenced-column-name="chargeBoxId"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="transactionPk" target-entity="Transaction">
-      <join-columns>
-        <join-column name="transaction_pk" referenced-column-name="transaction_pk"/>
       </join-columns>
     </many-to-one>
   </entity>

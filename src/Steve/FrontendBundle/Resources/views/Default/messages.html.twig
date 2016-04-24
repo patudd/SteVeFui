@@ -6,7 +6,7 @@
 {% block body %}
 
   	<div class="page-header">
-        <h1><a href="./main">Ladeberichte</a> </h1>
+        <h1><a href="./main">Nachrichten</a> </h1>
       </div>
 <nav class="navbar navbar-default">  
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,18 +63,15 @@
   <table class="table">
       <thead>
         <tr>
-        	<th>Trans-ID</th>           
-			<th>Station</th>
-			<th>Dose</th>
-			<th>Karte</th>
-			<th>Vorgang gestartet</th>
-          	<th>Vorgang beendet</th>
-          	<th>Verbrauch</th>
-          	<th>Ladedauer</th>
+        	<th>ID</th>           
+			<th>Betreff</th>
+			<th>Fehlercode</th>
+			<th>Nachricht</th>
+			<th>Zeit</th>
         </tr>
       </thead>
       <tbody id="list-transactions">
-    	{% include ('SteveFrontendBundle:Ajax:listtransactions.html.twig') %}
+    	{% include ('SteveFrontendBundle:Ajax:listmessages.html.twig') %}
       </tbody>
 </table>       
 </div>    

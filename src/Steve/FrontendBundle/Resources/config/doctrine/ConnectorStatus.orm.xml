@@ -4,17 +4,12 @@
     <indexes>
       <index name="FK_cs_pk_idx" columns="connector_pk"/>
     </indexes>
+    <id name="connectorPk" type="integer" column="connector_pk"/>
     <id name="statustimestamp" type="datetime" column="statusTimestamp"/>
-    <id name="connectorPk" association-key="true"/>
     <field name="status" type="string" column="status" length="25" nullable="true"/>
     <field name="errorcode" type="string" column="errorCode" length="25" nullable="true"/>
     <field name="errorinfo" type="string" column="errorInfo" length="50" nullable="true"/>
     <field name="vendorid" type="string" column="vendorId" length="255" nullable="true"/>
     <field name="vendorerrorcode" type="string" column="vendorErrorCode" length="50" nullable="true"/>
-    <one-to-one field="connectorPk" target-entity="Connector">
-      <join-columns>
-        <join-column name="connector_pk" referenced-column-name="connector_pk"/>
-      </join-columns>
-    </one-to-one>
   </entity>
 </doctrine-mapping>

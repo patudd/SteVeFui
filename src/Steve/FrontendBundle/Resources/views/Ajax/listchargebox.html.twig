@@ -1,6 +1,6 @@
       {% for item in connectors %}      
       <!--  active {% if item.transactionstatus %}warning{% else %}success{% endif %} {% if item.connectorstatus!='true' %}danger{% endif %} -->
-       <tr class="{% if item.connectorstatus==1 %} success {% elseif item.connectorstatus==2 %}warning {% elseif item.connectorstatus==4 %}warning {% else %} danger {% endif %}">
+       <tr class="{% if item.connectorstatus==1  %} success {% elseif (item.connectorstatus==2 or item.connectorstatus==7 or item.connectorstatus==8)  %}warning {% elseif item.connectorstatus==4 %}warning {% else %} danger {% endif %}">
          <td>{{ item.connectorid }}</td>
          <td>{{ item.idtag }}</td>
          <td>
@@ -15,7 +15,7 @@
          <td>
          <div class="btn-group">
          {% if item.connectorstatus==1 %} 
-         <button type="button" class="btn btn-warning action" disabled="disabled" title="Stecker entriegeln" data-connectorid="{{ item.connectorid }}" data-action="UnlockConnector" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Stecker entriegeln</button>
+         <button type="button" class="btn btn-warning action" {# disabled="disabled" #} title="Stecker entriegeln" data-connectorid="{{ item.connectorid }}" data-action="UnlockConnector" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Stecker entriegeln</button>
 		
 			 <button type="button" class="btn btn-success action" title="Startet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Starten</button>
 			  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -30,11 +30,28 @@
 			  </ul>
 			 
           {% elseif item.connectorstatus==2 %}
-           <button type="button" class="btn btn-warning action" title="Beendet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER"   data-transactionid="{{ item.transactionPk }}" data-connectorid="{{ item.connectorid }}" data-action="RemoteStopTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Beenden</button>
+           <button type="button" class="btn btn-warning action" title="Beendet Ladevorgang" data-transactionid="1" data-connectorid="{{ item.connectorid }}" data-action="RemoteStopTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Beenden</button>
+           <button type="button" class="btn btn-danger action" title="Setzt Ladepunkt zurück Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER"   data-transactionid="{{ item.transactionPk }}" data-connectorid="{{ item.connectorid }}" data-action="ChargePointReset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Zurück setzen</button>   	                     
+         {% elseif item.connectorstatus==6 %}
            <button type="button" class="btn btn-danger action" title="Setzt Ladepunkt zurück Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER"   data-transactionid="{{ item.transactionPk }}" data-connectorid="{{ item.connectorid }}" data-action="ChargePointReset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Zurück setzen</button>     	           
-          {% else %}
+          {% elseif item.connectorstatus==7 %}
+           <button type="button" class="btn btn-warning action" title="Beendet Ladevorgang" data-transactionid="1" data-action="RemoteStopTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Beenden</button>
+           <button type="button" class="btn btn-success action" title="Startet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Starten</button>
+		  {% elseif item.connectorstatus==8 %}
+           <button type="button" class="btn btn-warning action" {# disabled="disabled" #} title="Stecker entriegeln" data-connectorid="{{ item.connectorid }}" data-action="UnlockConnector" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Stecker entriegeln</button>
+			<button type="button" class="btn btn-success action" title="Startet Ladevorgang" id="DREWAG_MASTER" data-idtag="DREWAG_MASTER" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">Starten</button>
+			  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			    <span class="caret"></span>
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <ul class="dropdown-menu" role="menu">
+			  	 <li><input class="typeahead " type="text"></li>	
+			  	{% for user in users %}      
+				    <li><a href="#" class="action hc" title="Startet Ladevorgang" id="{{ user.idtag }}" data-idtag="{{ user.idtag }}" data-connectorid="{{ item.connectorid }}" data-action="RemoteStartTransaction" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ chargebox.ocppprotocol }}" data-endpointaddress="{{ chargebox.endpointaddress }}">{{ user.idtag }}</a></li>
+			   	{% endfor %} 
+			  </ul> 
+          {% endif %}
           </div>
-         {% endif %}
          </td>
        </tr>
        {% endfor %}         

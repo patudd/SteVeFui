@@ -27,8 +27,8 @@
                 <td>
                  {% if item.ocppprotocol %}
                  <div class="btn-group  btn-group-sm" role="group"  aria-label="...">
-                <button type="button" class="btn btn-warning action"  id="{{item.chargeboxid}}" data-object="chargebox" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppprotocol }}" data-endpointaddress="{{ item.endpointaddress }}" data-resettype="SOFT"  title="Neustart">Einstellung zurücksetzen</button>
-                <button type="button" class="btn btn-danger action" id="{{item.chargeboxid}}" data-object="chargebox" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppprotocol }}" data-endpointaddress="{{ item.endpointaddress }}"  data-resettype="Soft"  title="Neustart">Neustart</button>
+                {# <button type="button" class="btn btn-warning action"  id="{{item.chargeboxid}}" data-object="chargebox" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppprotocol }}" data-endpointaddress="{{ item.endpointaddress }}" data-resettype="SOFT"  title="Neustart">Einstellung zurücksetzen</button> #}
+                <button type="button" class="btn btn-danger action" id="{{item.chargeboxid}}" data-object="chargebox" data-action="Reset" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppprotocol }}" data-endpointaddress="{{ item.endpointaddress }}"  data-resettype="SOFT"  title="Neustart">Neustart</button>
                 <button type="button" class="btn btn-success action"  id="{{item.chargeboxid}}" data-object="chargebox" data-action="Update" data-chargeboxid="{{ item.chargeboxid }}" data-ocppversion="{{ item.ocppprotocol }}" data-endpointaddress="{{ item.endpointaddress }}" >aktualisieren</button>
                 </div>
                  {% endif %}

@@ -45,8 +45,17 @@ class DefaultController extends Controller
 		$global["interface"] = "steve";
 		/*$global["interface"] = "ocphp";		*/
 		$global["page"] = $page;
-		$global["version"] = "0.2.5";
+		$global["version"] = "0.2.7";
 		
+		$repo = $this->getDoctrine()->getManager()->getRepository('SteveFrontendBundle:Log');
+		
+		$qb = $repo->createQueryBuilder('idcount');
+		$qb->select('COUNT(idcount.id)');		
+		$qb->where('idcount.isread IS NULL');
+		
+		$count = $qb->getQuery()->getSingleScalarResult();
+		
+		$global["messages"] = $count;
 		return $global;
 	}
 	
@@ -81,6 +90,10 @@ class DefaultController extends Controller
     		}
     		case "contact": {
     			return OutputController::createPageContact($global);
+    			break;
+    		}
+    		case "messages": {
+    			return OutputController::createPageMessages($global);
     			break;
     		}
     		default:{

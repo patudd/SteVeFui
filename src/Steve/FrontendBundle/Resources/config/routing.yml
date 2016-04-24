@@ -13,3 +13,9 @@ SteveFrontendBundle_ajax_load_mydata:
 SteveFrontendBundle_interface:
   pattern:  /load/data/from/interface/call
   defaults: { _controller: SteveFrontendBundle:Interface:loadInterfaceData }
+SteveFrontendBundle_crontask:
+  pattern:  /crontasks/test
+  defaults: { _controller: SteveFrontendBundle:CronTask:test }
+SteveFrontendBundle_mail:
+  pattern:  /mail/send
+  defaults: { _controller: SteveFrontendBundle:Mail:send }

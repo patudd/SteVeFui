@@ -46,20 +46,19 @@ class InterfaceController extends DefaultController
 		$post_array['blocked'] = $request->request->get('blocked');		
 		$post_array['connectorId'] = $request->request->get('connectorId');
 		
-		
 		switch ($post_array['interface'])	
 		{
 			default:
 			case 'steve':
-				SteveController::sendData($post_array);
+				$return = SteveController::sendData($post_array);
 				break;
 			case 'ocphp':			
-				OCPHPController::sendData($post_array);
+				$return = OCPHPController::sendData($post_array);
 				break;
 			break;
 		}		
-	
-		$template = $this->renderView('SteveFrontendBundle:Ajax:empty.html.twig');		
+		$return_array = array("return"=>$return);
+		$template = $this->renderView('SteveFrontendBundle:Ajax:empty.html.twig', $return_array);		
 		return new Response($template);
 	}
 }

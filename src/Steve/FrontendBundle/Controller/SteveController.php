@@ -48,7 +48,7 @@ class SteveController extends InterfaceController
 		switch ($post_array['object']){			
 			case 'user': // bezieht sich alles auf Ladekarten!
 				$post_array['pfad'] = "/steve/manager/users/" . $post_array['action'];
-				self::postDate($post_array);
+				$return = self::postDate($post_array);
 				
 				break;
 			case 'chargebox':
@@ -62,18 +62,18 @@ class SteveController extends InterfaceController
 					self::postDate($post_array);
 					sleep(3);
 					$post_array['value']="100";
-					self::postDate($post_array);
+					$return =  self::postDate($post_array);
 					
 				}else{ /* z.B. Reset */
 					$post_array['pfad'] = "/steve/manager/operations/v".$post_array['ocppversion']."/" . $post_array['action'];
-					self::postDate($post_array);
+					$return =  self::postDate($post_array);
 				}				
 				break;
 			default:
 				$post_array['pfad'] = "/steve/manager/operations/v".$post_array['ocppversion']."/" . $post_array['action'];
-				self::postDate($post_array);
+				$return = self::postDate($post_array);
 		}
-				
+		return $return;		
 	}
 	
 	private function postDate($post_array){
@@ -97,7 +97,7 @@ class SteveController extends InterfaceController
 		
 		$fields = array_filter($fields);
 		$url ="http://". $post_array['domain'] . $post_array['pfad']; // URL, auf die zugegriffen wird
-		
+		#echo $url;
 		$fields_string = "";
 		
 		//url-ify the data for the POST
@@ -118,11 +118,39 @@ class SteveController extends InterfaceController
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		
 		$response = curl_exec($ch);
-		//echo $url;
-		//print_r($response);
+		
+		//echo $url;		
 		
 		if (empty($response)) {
 			throw new \Exception('No Request sending Data');
+		}else{
+			if (strpos($response, "_csrf"))
+			{
+				throw new \Exception("Fehler beim Login. Bitte überprüfen sie, ob beim SteVe die CSRF Authorisierung abgeschalten ist");
+			}elseif(strpos($response, "Service Unavailabl")){
+				//throw new \Exception("Bitte überprüfen sie, ob SteVe gestartet ist.");
+				return "Bitte überprüfen sie, ob SteVe gestartet ist.";
+			}elseif(strpos($response, "java.net.SocketException: Network is unreachable")){	
+				return "Bitte überprüfen sie, ob eine Verbindung vom Backend zur Ladestation besteht.";			
+			}else{
+				// a new dom object
+				$dom = new \domDocument;
+				
+				// load the html into the object	
+				libxml_use_internal_errors(true); // Fehler für nicht geschlossene Tags ausschalten
+				$dom->loadHTML($response);
+				//$dom->loadHTML("<div class=\"error\">sd</div>");
+				// discard white space
+				$dom->preserveWhiteSpace = false;
+				
+				$finder = new \DomXPath($dom);
+				$classname="error"; // sucht in der Datei nach der Klasse error 
+				$nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+				// und gibt die Fehlermeldung zurück
+				foreach ($nodes as $entry) {
+				    return $entry->nodeValue;
+				}
+			}
 		}
 		return 1;
 		

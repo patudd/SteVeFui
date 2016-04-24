@@ -106,7 +106,7 @@ class ConnectorRepository extends EntityRepository
 			if ($connector['starttimestamp']!="" && $connector['stoptimestamp']=="")
 			{
 				$connector['transactionstatus'] = true;
-				$connector['status']="Occupied";
+				//$connector['status']="Occupied";
 			}else{
 				$connector['transactionstatus'] = false;
 			}
@@ -123,11 +123,24 @@ class ConnectorRepository extends EntityRepository
 			$connector['connectorstatus'] = 3;
 		}
 		
+		// Ladevorgang wurde zvorzeitig beendet z.B. durch Stecker rausziehen
+		if($connector['status']=="Available" && $connector['transactionstatus'] == true)
+			$connector['connectorstatus'] = 6;
+		
 		if ($connector['starttimestamp']!="" && $connector['stoptimestamp']=="")
 		{
 			$connector['transactionstatus'] = true;
 		}else{
 			$connector['transactionstatus'] = false;
+		}
+		
+		if ($connector['status']=="Occupied" && $connector['transactionstatus'] == true)
+		{
+			$connector['connectorstatus'] = 7;
+		}
+		if ($connector['status']=="Occupied" && $connector['transactionstatus'] == false)
+		{
+			$connector['connectorstatus'] = 8;
 		}
 		$station = $connector['lastheartbeattimestamp']->getTimestamp();
 		$dif = time() - $station;

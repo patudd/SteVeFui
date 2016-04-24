@@ -1,0 +1,24 @@
+{% for item in log %} 
+     <tr class="{% if item.code is not empty  %}
+   		{% if item.code  > 400  %}
+	   		warning
+		{% endif %}
+		{% if item.code  > 600  %}
+	   		danger
+		{% endif %}
+	{% endif %}">
+		<td>{{ item.id }}</td>
+   		<td>{% if item.isread is empty  %}<strong>{% endif %} {{ item.subject }} {% if item.isread is empty  %}</strong>{% endif %}</td>
+   		<td>{{ item.code }}</td>
+   		<td>{{ item.message }}</td>
+   		<td>{{ item.inserttimestamp is empty ? "" : item.inserttimestamp|date('d.m.Y H:i:s') }} </td>
+   		<td>
+		
+			<span class="action glyphicon glyphicon-ok" style="color:green;" title="Nachricht gelesen Ladevorgang"   data-messages_id="{{ item.id }}" data-action="read">&nbsp;</span>
+           	<span class="action glyphicon glyphicon-remove " style="color:red;" title="Nachricht löschen"  data-messages_id="{{ item.id }}"  data-action="delete">&nbsp;</span>    	           
+          
+		
+		</td>   		
+   		<td></td> 
+    </tr>
+{% endfor %}   
