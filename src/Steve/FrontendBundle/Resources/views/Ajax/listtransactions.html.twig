@@ -7,14 +7,8 @@
 	   		danger
 		{% endif %}
 	{% endif %}
-	
-   	{% if item.durationvalue   < 50  %}
-   		warning
-	{% endif %}
-	{% if item.durationvalue < 5  %}
-   		danger
-	{% endif %}
 	">
+		<td>{{ item.transactionPk }}</td>
    		<td>{{ item.chargeboxid }}</td>
    		<td>{{ item.connectorid }}</td>
    		<td>{{ item.idtag }}</td>

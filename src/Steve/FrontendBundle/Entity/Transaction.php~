@@ -7,7 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Transaction
- *
+ * 
+ * @ORM\Entity(repositoryClass="\Steve\FrontendBundle\Entity\TransactionRepository")
  * @ORM\Table(name="transaction", uniqueConstraints={@ORM\UniqueConstraint(name="transaction_pk_UNIQUE", columns={"transaction_pk"})}, indexes={@ORM\Index(name="idTag_idx", columns={"idTag"}), @ORM\Index(name="connector_pk_idx", columns={"connector_pk"})})
  * @ORM\Entity
  */

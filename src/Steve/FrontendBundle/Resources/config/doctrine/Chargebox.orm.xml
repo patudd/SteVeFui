@@ -8,12 +8,12 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="endpointAddress" type="string" column="endpoint_address" length="45" nullable="true"/>
-    <field name="ocppprotocol" type="string" column="ocppProtocol" length="3" nullable="true"/>
+    <field name="ocppprotocol" type="string" column="ocppProtocol" length="10" nullable="true"/>
     <field name="chargepointvendor" type="string" column="chargePointVendor" length="20" nullable="true"/>
     <field name="chargepointmodel" type="string" column="chargePointModel" length="20" nullable="true"/>
     <field name="chargepointserialnumber" type="string" column="chargePointSerialNumber" length="25" nullable="true"/>
     <field name="chargeboxserialnumber" type="string" column="chargeBoxSerialNumber" length="25" nullable="true"/>
-    <field name="fwversion" type="string" column="fwVersion" length="20" nullable="true"/>
+    <field name="fwversion" type="string" column="fwVersion" length="50" nullable="true"/>
     <field name="fwupdatestatus" type="string" column="fwUpdateStatus" length="25" nullable="true"/>
     <field name="fwupdatetimestamp" type="datetime" column="fwUpdateTimestamp" nullable="true"/>
     <field name="iccid" type="string" column="iccid" length="20" nullable="true"/>

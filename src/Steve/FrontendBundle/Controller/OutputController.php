@@ -55,9 +55,14 @@ class OutputController extends DefaultController
 				'global' => $global
 		);
 	
+		//$this->get("app.email_controller");
+		
+		//$controller = new Controller();
+		//$this->forward('app.email_controller:sendAction');
+		
 		if ($this->container->getParameter('kernel.environment')=="dev")
 			dump($chargeboxes);
-	
+		
 		return $this->render('SteveFrontendBundle:Default:index.html.twig', $array_render);
 	}
 	/**
@@ -186,5 +191,31 @@ class OutputController extends DefaultController
 			dump($users);
 		}
 		return $this->render('SteveFrontendBundle:Default:contact.html.twig', $array_render);
+	}
+	/**
+	 * Erstellen der Übersichtsseite der Ladevorgängen
+	 *
+	 * @param array $global
+	 *
+	 * @return html Ausgabe
+	 */
+	public function createPageMessages($global){
+		$session_filter = new Session();
+		$session_filter->start();
+		$session_filter->clear(); // Session löschen beim Seiten neu laden!
+		$users = $this->getDoctrine()->getRepository('SteveFrontendBundle:User')->findAll();
+		$chargeboxes = $this->getDoctrine()->getRepository('SteveFrontendBundle:Chargebox')->findAll();
+		$log = $this->getDoctrine()->getRepository('SteveFrontendBundle:Log')->findBy(array(), array('id'=>"desc"));
+	
+		$array_render = array(
+				'log' => $log,
+				'users' => $users,
+				'chargeboxes' => $chargeboxes,
+				'global' => $global
+		);
+		if ($this->container->getParameter('kernel.environment')=="dev"){
+			dump($log);
+		}
+		return $this->render('SteveFrontendBundle:Default:messages.html.twig', $array_render);
 	}
 }

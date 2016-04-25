@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Steve\FrontendBundle\Entity\SchemaVersion" table="schema_version">
+    <indexes>
+      <index name="schema_version_vr_idx" columns="version_rank"/>
+      <index name="schema_version_ir_idx" columns="installed_rank"/>
+      <index name="schema_version_s_idx" columns="success"/>
+    </indexes>
+    <id name="version" type="string" column="version" length="50">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="versionRank" type="integer" column="version_rank" nullable="false"/>
+    <field name="installedRank" type="integer" column="installed_rank" nullable="false"/>
+    <field name="description" type="string" column="description" length="200" nullable="false"/>
+    <field name="type" type="string" column="type" length="20" nullable="false"/>
+    <field name="script" type="string" column="script" length="1000" nullable="false"/>
+    <field name="checksum" type="integer" column="checksum" nullable="true"/>
+    <field name="installedBy" type="string" column="installed_by" length="100" nullable="false"/>
+    <field name="installedOn" type="datetime" column="installed_on" nullable="false"/>
+    <field name="executionTime" type="integer" column="execution_time" nullable="false"/>
+    <field name="success" type="boolean" column="success" nullable="false"/>
+  </entity>
+</doctrine-mapping>
